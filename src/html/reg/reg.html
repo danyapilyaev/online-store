@@ -25,18 +25,18 @@
       <header><h1 class="fw-bold">Svetilo</h1></header>
 
       <main class="form-container">
-        <form class="w-100" action="regAction.php" method="post">
+        <form class="w-100" action="regAction.php" method="POST">
           <h3 class="mb-3 fw-normal">Регистрация</h3>
           <div class="form-floating mb-3">
             <input
-              type="text"
+              type="email"
               class="form-control"
-              name="username"
+              name="email"
               id="floatingInput"
-              placeholder="username"
-              autocomplete="username"
+              placeholder="Email"
+              autocomplete="email"
             />
-            <label for="floatingInput">Username</label>
+            <label for="floatingInput">Email</label>
           </div>
           <div class="form-floating mb-3">
             <input
@@ -50,7 +50,10 @@
             <label for="floatingPassword">Пароль</label>
           </div>
 
-          <button type="submit" class="btn btn-primary w-100 py-2 mb-3">
+          <button
+            type="submit"
+            class="btn btn-primary w-100 py-2 mb-3"
+          >
             Зарегистрироваться
           </button>
           <div class="d-flex justify-content-between">

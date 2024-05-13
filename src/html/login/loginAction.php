@@ -1,50 +1,42 @@
-<?php require_once '../connection.php'; ?>
-<?php require_once '../library.php'; ?>
 <?php
-    
-    if(chkLogin()){
-        header("Location: home.php");
-    }
-?>
-<?php
+require_once '../connection.php'; 
+session_start();
 
-    if(isset($_POST['login'])){
-      
-        
-        $email = $_POST['email'];
-        $upass = $_POST['pass'];
-        $criteria = array("Email Address"=> $email);
-        $query = $collection->findOne($criteria);
-        //var_dump($query);
-        if(empty($query)){
-            echo "Email ID is not registered.";
-            echo "Either <a href='register'>Register</a> with the new Email ID or <a href='login.php'>Login</a> with an already registered ID";
-        }
-        else{
-            
-                $pass = $query["Password"];
-                if(password_verify($upass,$pass)){
-                    $var = setsession($email);
-                  
-                    
-                    if($var){
-                        
-                    header("Location: home.php");
-                    }
-                    else{
-                        echo "Some error";
-                    }
-                }
-                else{
-                    echo "You have entered a wrong password";
-                    echo "<br>";
-                    echo "Either <a href='register'>Register</a> with the new Email ID or <a href='login.php'>Login</a> with an already registered ID";
-                }
-                
-            
-        
-        }
+function checkCredentials($email, $password){
+    global $pdo;
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
+
+    if ($user && password_verify($password, $user['password'])) {
+        return $user;
     }
-    
+    return false;
+}
+
+function setLoginSession($user){
+    $_SESSION['userLoggedIn'] = 1;
+    $_SESSION['email'] = $user['email'];
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    $user = checkCredentials($email, $password);
+    if ($user) {
+        setLoginSession($user);
+        header('Location: ../../../index.html');
+        exit;
+    } else {
+        $message = "Неправильный email или пароль.";
+        header('Location: ../login/login.html?error=' . urlencode($message));
+        exit;
+    }
+} else {
+    // Not a POST request
+    echo 'Use the form to submit credentials.';
+}
 
 ?>

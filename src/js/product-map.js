@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  const productImage = "/src/assets/images/product.png";
+  const productImage = "product.png";
   const products = [
     {
       id: 1,
