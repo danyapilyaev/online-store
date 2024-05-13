@@ -1,0 +1,26 @@
+body {
+    font-family: "DM Sans", sans-serif !important;
+    color: #1e0e62 !important;
+    scroll-behavior: smooth;
+  }
+  
+  a {
+    color: #1e0e62;
+  }
+  
+  .card {
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s; /* Анимация */
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* При наведении карточка немного увеличивается */
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto; /* Обеспечивает правильное отображение изображения */
+  }
+
+  
